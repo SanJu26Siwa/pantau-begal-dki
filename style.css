@@ -560,12 +560,11 @@ main > * {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  height: 780px;
+  max-height: 780px;
   min-height: 0;
 }
 
 .col-feed .panel {
-  height: 100%;
   overflow: hidden;
   min-height: 0;
   display: flex;
