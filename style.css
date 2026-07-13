@@ -263,6 +263,10 @@ main > * {
     grid-column: span 2;
     max-height: none !important;
   }
+  .col-feed .panel {
+    height: auto !important;
+    overflow: visible !important;
+  }
 }
 
 /* Mobile Screen Layout (1 Column Stacked) */
@@ -553,13 +557,15 @@ main > * {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  max-height: calc(100vh - 120px);
+  min-height: 0;
 }
 
-@media (max-width: 1200px) {
-  .col-feed {
-    max-height: none;
-  }
+.col-feed .panel {
+  height: 100%;
+  overflow: hidden;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .feed-filters {
