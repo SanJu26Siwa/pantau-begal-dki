@@ -263,11 +263,6 @@ main > * {
     grid-column: span 2;
     max-height: none !important;
   }
-  .col-stats {
-    max-height: none !important;
-    overflow-y: visible !important;
-    padding-right: 0 !important;
-  }
 }
 
 /* Mobile Screen Layout (1 Column Stacked) */
@@ -350,9 +345,6 @@ main > * {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
-  padding-right: 0.25rem;
 }
 
 .stat-grid {
