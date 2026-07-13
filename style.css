@@ -248,6 +248,11 @@ main {
   gap: 1.5rem;
 }
 
+/* Grid items reset to allow shrinking below content size */
+main > * {
+  min-width: 0;
+}
+
 /* Tablet & Medium Screen Layout (2 Columns, Feed at bottom) */
 @media (max-width: 1150px) {
   main {
@@ -257,6 +262,11 @@ main {
   .col-feed {
     grid-column: span 2;
     max-height: none !important;
+  }
+  .col-stats {
+    max-height: none !important;
+    overflow-y: visible !important;
+    padding-right: 0 !important;
   }
 }
 
@@ -340,6 +350,9 @@ main {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  padding-right: 0.25rem;
 }
 
 .stat-grid {
