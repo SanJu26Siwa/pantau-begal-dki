@@ -246,6 +246,7 @@ main {
   display: grid;
   grid-template-columns: 280px 1fr 320px;
   gap: 1.5rem;
+  align-items: start;
 }
 
 /* Grid items reset to allow shrinking below content size */
@@ -258,10 +259,12 @@ main > * {
   main {
     grid-template-columns: 280px 1fr;
     grid-template-rows: auto;
+    align-items: stretch;
   }
   .col-feed {
     grid-column: span 2;
     max-height: none !important;
+    height: auto !important;
   }
   .col-feed .panel {
     height: auto !important;
@@ -557,6 +560,7 @@ main > * {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  height: 780px;
   min-height: 0;
 }
 
