@@ -254,7 +254,7 @@ main > * {
 }
 
 /* Tablet & Medium Screen Layout (2 Columns, Feed at bottom) */
-@media (max-width: 1150px) {
+@media (max-width: 1250px) {
   main {
     grid-template-columns: 280px 1fr;
     grid-template-rows: auto;
@@ -308,6 +308,7 @@ main > * {
   flex-direction: column;
   gap: 1.25rem;
   box-shadow: var(--shadow-md);
+  min-width: 0;
 }
 
 .panel-title {
@@ -531,7 +532,7 @@ main > * {
   gap: 1.25rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1250px) {
   .charts-panel {
     grid-template-columns: 1fr;
   }
