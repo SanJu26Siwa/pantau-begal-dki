@@ -349,7 +349,10 @@ function renderFeed() {
                           item.location.toLowerCase().includes(searchQuery) ||
                           item.details.toLowerCase().includes(searchQuery) ||
                           item.kelurahan.toLowerCase().includes(searchQuery);
-    const matchesRegion = selectedRegion === "" || item.region === selectedRegion;
+    const matchesRegion = selectedRegion === "" || 
+                          (selectedRegion === "DKI Jakarta" && ["Jakarta Pusat", "Jakarta Utara", "Jakarta Barat", "Jakarta Selatan", "Jakarta Timur"].includes(item.region)) ||
+                          (selectedRegion === "Bali" && ["Denpasar", "Badung", "Gianyar", "Buleleng", "Tabanan"].includes(item.region)) ||
+                          item.region === selectedRegion;
     const matchesKelurahan = selectedKelurahan === "" || item.kelurahan === selectedKelurahan;
     const matchesPlatform = selectedPlatform === "" || item.platform === selectedPlatform;
     
@@ -714,10 +717,16 @@ function handleRegionChange() {
   
   kelurahanSelect.innerHTML = `<option value="">Pilih Kelurahan</option>`;
   
-  if (selectedRegion === "") {
+  if (selectedRegion === "" || selectedRegion === "DKI Jakarta" || selectedRegion === "Bali") {
     kelurahanSelect.disabled = true;
-    // Kembalikan peta fokus ke Jakarta (default)
-    map.flyTo([-6.2088, 106.8456], 11);
+    
+    // Geser peta berdasarkan Provinsi atau Default
+    if (selectedRegion === "Bali") {
+      map.flyTo([-8.4095, 115.1889], 9);
+    } else {
+      // Default / DKI Jakarta
+      map.flyTo([-6.2088, 106.8456], 11);
+    }
   } else {
     kelurahanSelect.disabled = false;
     
