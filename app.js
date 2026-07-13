@@ -131,16 +131,69 @@ let incidents = [
     level: "high",
     details: "Laporan dari grup warga melaporkan aksi pembegalan yang mengakibatkan korban luka bacok di bahu kiri karena mencoba mempertahankan motor Aerox miliknya. Korban dilarikan ke RS terdekat oleh pengendara ojek online.",
     sourceUrl: "https://www.facebook.com/groups/cengkareng.bersatu/posts/890123789/"
+  },
+  {
+    id: 9,
+    title: "Begal Sajam Serang Wisatawan Asing di Sunset Road Kuta",
+    platform: "twitter",
+    username: "@bali_crime",
+    time: "1 hari yang lalu",
+    timestamp: Date.now() - 24 * 60 * 60 * 1000,
+    region: "Badung",
+    kecamatan: "Kuta",
+    kelurahan: "Seminyak",
+    location: "Jl. Sunset Road, Seminyak, Kuta",
+    coords: [-8.7020, 115.1785],
+    level: "high",
+    details: "Aksi begal jalanan menggunakan parang menimpa pemotor asing yang melintas dini hari. Sepeda motor matik sewaan dan tas korban dirampas pelaku berboncengan.",
+    sourceUrl: "https://www.balipost.com/news/begal-kuta-sunset-road"
+  },
+  {
+    id: 10,
+    title: "Penjambretan Kalung Wisatawan di Ubud Gianyar",
+    platform: "instagram",
+    username: "@ubud_news",
+    time: "2 hari yang lalu",
+    timestamp: Date.now() - 48 * 60 * 60 * 1000,
+    region: "Gianyar",
+    kecamatan: "Ubud",
+    kelurahan: "Ubud",
+    location: "Jl. Raya Ubud, Gianyar",
+    coords: [-8.5069, 115.2625],
+    level: "medium",
+    details: "Jambret kalung menimpa turis asing saat berjalan kaki di trotoar Ubud malam hari. Pelaku pemotor matik memotong jalan dan langsung menyambar kalung emas korban.",
+    sourceUrl: "https://www.balipost.com/news/ubud-jambret-wisman"
+  },
+  {
+    id: 11,
+    title: "Indikasi Konvoi Bawa Sajam Diamankan Pecalang di Renon",
+    platform: "facebook",
+    username: "Grup Info Denpasar Bali",
+    time: "3 hari yang lalu",
+    timestamp: Date.now() - 72 * 60 * 60 * 1000,
+    region: "Denpasar",
+    kecamatan: "Denpasar Selatan",
+    kelurahan: "Renon",
+    location: "Kawasan Lapangan Niti Mandala Renon, Denpasar",
+    coords: [-8.6738, 115.2285],
+    level: "low",
+    details: "Petugas keamanan adat Pecalang beserta Kepolisian mengamankan 3 remaja pembawa besi tajam yang berkonvoi mencurigakan di malam hari. Warga diminta melapor jika melihat kelompok serupa.",
+    sourceUrl: "https://www.balipost.com/news/konvoi-sajam-renon"
   }
 ];
 
-// Mapping Kelurahan berdasarkan Kota Administrasi
+// Mapping Kelurahan berdasarkan Kota Administrasi / Kabupaten
 let kelurahanMapping = {
   "Jakarta Pusat": ["Karet Sudirman", "Harapan Mulya", "Johar Baru", "Cempaka Putih Timur"],
   "Jakarta Utara": ["Kelapa Gading Barat", "Pluit", "Sunter Agung"],
   "Jakarta Barat": ["Cengkareng Barat", "Duri Kosambi", "Tomang"],
   "Jakarta Selatan": ["Tebet Timur", "Pasar Minggu", "Kebayoran Lama"],
-  "Jakarta Timur": ["Tengah", "Rambutan", "Klender", "Pulogadung", "Gedong"]
+  "Jakarta Timur": ["Tengah", "Rambutan", "Klender", "Pulogadung", "Gedong"],
+  "Denpasar": ["Renon", "Sanur", "Panjer", "Kesiman"],
+  "Badung": ["Seminyak", "Kuta", "Jimbaran", "Canggu"],
+  "Gianyar": ["Sayan", "Ubud", "Sukawati"],
+  "Buleleng": ["Singaraja", "Lovina"],
+  "Tabanan": ["Kediri", "Marga"]
 };
 
 // DERET WAKTU BULANAN HISTORIS (365 HARI TERAKHIR)
@@ -653,7 +706,7 @@ function updateCharts() {
   }
 }
 
-// LOGIKA DROPDOWN BERTINGKAT
+// LOGIKA DROPDOWN BERTINGKAT & PERGESERAN FOKUS PETA
 function handleRegionChange() {
   const regionSelect = document.getElementById("filter-region");
   const kelurahanSelect = document.getElementById("filter-kelurahan");
@@ -663,6 +716,8 @@ function handleRegionChange() {
   
   if (selectedRegion === "") {
     kelurahanSelect.disabled = true;
+    // Kembalikan peta fokus ke Jakarta (default)
+    map.flyTo([-6.2088, 106.8456], 11);
   } else {
     kelurahanSelect.disabled = false;
     
@@ -680,6 +735,24 @@ function handleRegionChange() {
       option.textContent = kel;
       kelurahanSelect.appendChild(option);
     });
+
+    // Koordinat pusat wilayah untuk pergeseran otomatis peta
+    const regionCoordinates = {
+      "Jakarta Pusat": [-6.1864, 106.8340],
+      "Jakarta Utara": [-6.1384, 106.8664],
+      "Jakarta Barat": [-6.1683, 106.7588],
+      "Jakarta Selatan": [-6.2615, 106.8106],
+      "Jakarta Timur": [-6.2250, 106.9004],
+      "Denpasar": [-8.6705, 115.2126],
+      "Badung": [-8.6500, 115.1764],
+      "Gianyar": [-8.5300, 115.2625],
+      "Buleleng": [-8.1300, 115.0880],
+      "Tabanan": [-8.5414, 115.1278]
+    };
+
+    if (regionCoordinates[selectedRegion]) {
+      map.flyTo(regionCoordinates[selectedRegion], 12);
+    }
   }
 
   renderFeed();
@@ -830,6 +903,19 @@ function startSocialMediaSimulation() {
       sourceUrl: "https://x.com/jkt_warn/status/178901201928"
     },
     {
+      title: "Begal Rampas Motor Wisatawan Asing di Canggu",
+      platform: "instagram",
+      username: "@canggu.update",
+      region: "Badung",
+      kecamatan: "Kuta Utara",
+      kelurahan: "Canggu",
+      location: "Jl. Raya Batu Bolong, Canggu, Badung",
+      coords: [-8.6477, 115.1385],
+      level: "high",
+      details: "Aksi begal motor sewaan menimpa turis asing saat berkendara malam di kawasan sepi Canggu. Pelaku mengancam menggunakan sebilah pisau panjang dan berhasil merampas motor Yamaha NMAX korban.",
+      sourceUrl: "https://www.balipost.com/news/begal-wisman-canggu"
+    },
+    {
       title: "Kelompok Motor Berparang Dibubarkan Tim Perintis",
       platform: "news",
       username: "PoskotaNews",
@@ -843,6 +929,19 @@ function startSocialMediaSimulation() {
       sourceUrl: "https://poskotanews.co.id/metro/2026/07/tim-perintis-amankan-begal-klender"
     },
     {
+      title: "Aksi Jambret Handphone Terekam CCTV di Lovina Bali",
+      platform: "tiktok",
+      username: "@lovinanews",
+      region: "Buleleng",
+      kecamatan: "Buleleng",
+      kelurahan: "Lovina",
+      location: "Jalan Raya Lovina, Kalibukbuk, Buleleng",
+      coords: [-8.1580, 115.0240],
+      level: "medium",
+      details: "Penjambretan HP milik warga yang sedang duduk di depan toko kelontong terekam kamera pengawas. Pelaku bermotor matik tanpa plat kabur ke arah timur Singaraja.",
+      sourceUrl: "https://www.balipost.com/news/jambret-lovina-cctv"
+    },
+    {
       title: "Begal Sadis Rampas Motor Ninja di Penjaringan",
       platform: "instagram",
       username: "@penjaringan.info",
@@ -852,7 +951,7 @@ function startSocialMediaSimulation() {
       location: "Kawasan Waduk Pluit, Penjaringan",
       coords: [-6.1150, 106.7990],
       level: "high",
-      details: "Aksi pembegalan motor sport Kawasaki Ninja terjadi di kawasan sepi Waduk Pluit pukul 03.10 WIB. Pelaku berjumlah 6 orang dengan 3 motor memojokkan korban dan melukai tangan kanan korban dengan senjata tajam sebelum kabur membawa motor.",
+      details: "Aksi pembegalan motor sport Kawasaki Ninja terjadi di kawasan sepi Waduk Pluit pukul 03.10 WIB. Pelaku berjumlah 6 orang dengan 3 motor melukai tangan kanan korban dengan senjata tajam sebelum kabur membawa motor.",
       sourceUrl: "https://www.instagram.com/p/C6Z789ghXYZ/"
     },
     {

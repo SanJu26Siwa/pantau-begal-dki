@@ -15,7 +15,7 @@
         crossorigin="" />
         
   <!-- Custom Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=1.0.5">
+  <link rel="stylesheet" href="style.css?v=1.0.6">
 </head>
 <body>
 
@@ -254,11 +254,20 @@
             <div class="select-filters">
               <select id="filter-region" class="select-filter">
                 <option value="">Semua Wilayah</option>
-                <option value="Jakarta Pusat">Jakarta Pusat</option>
-                <option value="Jakarta Utara">Jakarta Utara</option>
-                <option value="Jakarta Barat">Jakarta Barat</option>
-                <option value="Jakarta Selatan">Jakarta Selatan</option>
-                <option value="Jakarta Timur">Jakarta Timur</option>
+                <optgroup label="DKI Jakarta">
+                  <option value="Jakarta Pusat">Jakarta Pusat</option>
+                  <option value="Jakarta Utara">Jakarta Utara</option>
+                  <option value="Jakarta Barat">Jakarta Barat</option>
+                  <option value="Jakarta Selatan">Jakarta Selatan</option>
+                  <option value="Jakarta Timur">Jakarta Timur</option>
+                </optgroup>
+                <optgroup label="Bali">
+                  <option value="Denpasar">Denpasar</option>
+                  <option value="Badung">Badung</option>
+                  <option value="Gianyar">Gianyar</option>
+                  <option value="Buleleng">Buleleng</option>
+                  <option value="Tabanan">Tabanan</option>
+                </optgroup>
               </select>
               <select id="filter-kelurahan" class="select-filter" disabled>
                 <option value="">Pilih Kelurahan</option>
@@ -315,11 +324,20 @@
               <label for="report-region">Wilayah Kota</label>
               <select id="report-region" class="form-select" required>
                 <option value="">Pilih Wilayah</option>
-                <option value="Jakarta Pusat">Jakarta Pusat</option>
-                <option value="Jakarta Utara">Jakarta Utara</option>
-                <option value="Jakarta Barat">Jakarta Barat</option>
-                <option value="Jakarta Selatan">Jakarta Selatan</option>
-                <option value="Jakarta Timur">Jakarta Timur</option>
+                <optgroup label="DKI Jakarta">
+                  <option value="Jakarta Pusat">Jakarta Pusat</option>
+                  <option value="Jakarta Utara">Jakarta Utara</option>
+                  <option value="Jakarta Barat">Jakarta Barat</option>
+                  <option value="Jakarta Selatan">Jakarta Selatan</option>
+                  <option value="Jakarta Timur">Jakarta Timur</option>
+                </optgroup>
+                <optgroup label="Bali">
+                  <option value="Denpasar">Denpasar</option>
+                  <option value="Badung">Badung</option>
+                  <option value="Gianyar">Gianyar</option>
+                  <option value="Buleleng">Buleleng</option>
+                  <option value="Tabanan">Tabanan</option>
+                </optgroup>
               </select>
             </div>
             <div>
