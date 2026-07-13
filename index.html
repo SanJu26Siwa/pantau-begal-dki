@@ -279,8 +279,8 @@
               <span><i class="fa-solid fa-phone"></i> 110</span>
             </button>
             <button class="action-btn" id="btn-open-safety-tips">
-              <span>Tips Keselamatan Berkendara</span>
-              <span><i class="fa-solid fa-shield-cat"></i> Baca</span>
+              <span>Kriteria Bahaya & Tips Safety</span>
+              <span><i class="fa-solid fa-circle-info"></i> Baca</span>
             </button>
           </div>
         </div>
@@ -374,22 +374,60 @@
     </div>
   </div>
 
-  <!-- MODAL 2: SAFETY TIPS -->
+  <!-- MODAL 2: SAFETY TIPS & CRITERIA -->
   <div class="modal-overlay" id="modal-safety-tips">
     <div class="modal-content">
       <div class="modal-header">
-        <h3><i class="fa-solid fa-shield-halved" style="color: var(--color-cyan);"></i> Tips Keselamatan Berkendara Malam Hari</h3>
+        <h3><i class="fa-solid fa-shield-halved" style="color: var(--color-cyan);"></i> Panduan Keamanan & Kriteria Bahaya</h3>
         <button class="modal-close" id="btn-close-safety-modal">&times;</button>
       </div>
       <div class="modal-body" style="color: var(--text-secondary); font-size: 0.9rem;">
-        <ul style="padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;">
-          <li><strong style="color: white;">Hindari Rute Gelap dan Sepi:</strong> Pilihlah jalan protokol utama yang memiliki penerangan baik dan ramai kendaraan, meskipun jarak tempuh menjadi sedikit lebih jauh.</li>
-          <li><strong style="color: white;">Berkendara secara Berkelompok:</strong> Di atas jam 11 malam, usahakan tidak berkendara sendirian. Tempel atau ikuti rombongan pengendara motor lain di depan Anda.</li>
-          <li><strong style="color: white;">Waspadai Spion:</strong> Selalu cek kaca spion Anda secara berkala. Jika ada pengendara mencurigakan yang membuntuti, segera meluncur ke tempat ramai, pom bensin, atau kantor polisi terdekat.</li>
-          <li><strong style="color: white;">Persiapkan Rencana Darurat:</strong> Catat atau simpan nomor darurat Polda Metro Jaya (110) dan Pemprov DKI (112) di tombol panggil cepat ponsel Anda.</li>
-          <li><strong style="color: white;">Jangan Berhenti di Tempat Gelap:</strong> Jika ban Anda terasa kurang angin atau mendapat gangguan kecil, usahakan terus berjalan sampai menemukan minimarket atau area terang berpenjaga untuk berhenti.</li>
-          <li><strong style="color: white;">Gunakan Perlengkapan Pelindung:</strong> Gunakan helm full face dan jaket tebal yang melindungi dada untuk mengurangi risiko fatalitas jika terjadi serangan fisik mendadak.</li>
-        </ul>
+        <!-- Kriteria Bahaya Begal -->
+        <div style="margin-bottom: 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border-color);">
+          <h4 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
+            <i class="fa-solid fa-triangle-exclamation" style="color: var(--color-medium);"></i>
+            Kriteria Penilaian Tingkat Bahaya Begal
+          </h4>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem; line-height: 1.4;">
+            Sistem mengategorikan tingkat kerawanan/bahaya insiden begal berdasarkan kriteria indikator lapangan berikut:
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.85rem;">
+            <div style="padding: 0.65rem 0.85rem; background: rgba(225, 29, 72, 0.03); border-left: 4px solid var(--color-high); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; border-top: 1px solid rgba(225, 29, 72, 0.05); border-right: 1px solid rgba(225, 29, 72, 0.05); border-bottom: 1px solid rgba(225, 29, 72, 0.05);">
+              <strong style="color: var(--color-high); display: block; margin-bottom: 0.15rem; font-weight: 700;">Bahaya Tinggi (High Alert)</strong>
+              <p style="color: var(--text-secondary); line-height: 1.4; font-size: 0.8rem;">
+                Dinilai berdasarkan adanya penggunaan <strong>senjata tajam (sajam)</strong> atau <strong>senjata api (senpi)</strong> oleh pelaku, adanya kontak fisik/serangan langsung yang menyebabkan korban luka-luka atau fatalitas, serta perampasan paksa aset kendaraan bermotor di tempat kejadian.
+              </p>
+            </div>
+            <div style="padding: 0.65rem 0.85rem; background: rgba(234, 88, 12, 0.03); border-left: 4px solid var(--color-medium); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; border-top: 1px solid rgba(234, 88, 12, 0.05); border-right: 1px solid rgba(234, 88, 12, 0.05); border-bottom: 1px solid rgba(234, 88, 12, 0.05);">
+              <strong style="color: var(--color-medium); display: block; margin-bottom: 0.15rem; font-weight: 700;">Bahaya Sedang (Medium Alert)</strong>
+              <p style="color: var(--text-secondary); line-height: 1.4; font-size: 0.8rem;">
+                Dinilai berdasarkan tindakan kriminalitas perampasan barang berharga tanpa adanya senjata tajam ekstrem atau cedera fisik serius. Contohnya: <strong>penjambretan handphone/tas</strong> di trotoar atau lampu merah, pemalakan liar (pungli jalanan) disertai intimidasi verbal, dan penipuan/hipnotis jalanan.
+              </p>
+            </div>
+            <div style="padding: 0.65rem 0.85rem; background: rgba(202, 138, 4, 0.03); border-left: 4px solid var(--color-low); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; border-top: 1px solid rgba(202, 138, 4, 0.05); border-right: 1px solid rgba(202, 138, 4, 0.05); border-bottom: 1px solid rgba(202, 138, 4, 0.05);">
+              <strong style="color: var(--color-low); display: block; margin-bottom: 0.15rem; font-weight: 700;">Bahaya Rendah (Low Alert)</strong>
+              <p style="color: var(--text-secondary); line-height: 1.4; font-size: 0.8rem;">
+                Dinilai berdasarkan adanya indikasi awal ancaman keamanan atau upaya kriminalitas yang gagal. Contohnya: terlihat <strong>konvoi remaja membawa sajam (indikasi begal/tawuran)</strong>, dicurigai dibuntuti pengendara tak dikenal di rute sepi, atau percobaan pembegalan yang berhasil digagalkan tanpa menimbulkan kerugian materi maupun fisik.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tips Keselamatan -->
+        <div>
+          <h4 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
+            <i class="fa-solid fa-shield-halved" style="color: var(--color-cyan);"></i>
+            Tips Keselamatan Berkendara Malam Hari
+          </h4>
+          <ul style="padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.8rem; line-height: 1.4;">
+            <li><strong style="color: var(--text-primary);">Hindari Rute Gelap dan Sepi:</strong> Pilihlah jalan protokol utama yang memiliki penerangan baik dan ramai kendaraan, meskipun jarak tempuh menjadi sedikit lebih jauh.</li>
+            <li><strong style="color: var(--text-primary);">Berkendara secara Berkelompok:</strong> Di atas jam 11 malam, usahakan tidak berkendara sendirian. Tempel atau ikuti rombongan pengendara motor lain di depan Anda.</li>
+            <li><strong style="color: var(--text-primary);">Waspadai Spion:</strong> Selalu cek kaca spion Anda secara berkala. Jika ada pengendara mencurigakan yang membuntuti, segera meluncur ke tempat ramai, pom bensin, atau kantor polisi terdekat.</li>
+            <li><strong style="color: var(--text-primary);">Persiapkan Rencana Darurat:</strong> Catat atau simpan nomor darurat Polda Metro Jaya (110) dan Pemprov DKI (112) di ponsel Anda.</li>
+            <li><strong style="color: var(--text-primary);">Jangan Berhenti di Tempat Gelap:</strong> Jika ban kurang angin atau mendapat gangguan kecil, usahakan terus berjalan sampai menemukan minimarket atau area terang berpenjaga.</li>
+            <li><strong style="color: var(--text-primary);">Gunakan Perlengkapan Pelindung:</strong> Gunakan helm full face dan jaket tebal untuk mengurangi risiko fatalitas serangan fisik mendadak.</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
