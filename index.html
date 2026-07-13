@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pantau Begal DKI Jakarta - Sistem Informasi Peta Kerawanan dan Pelacakan Sosial Kriminalitas Begal Terintegrasi">
+  <title>Pantau Begal DKI Jakarta - Peta Kerawanan & Intelijen Media Sosial</title>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
+        crossorigin="" />
+        
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header>
+      <div class="header-content">
+        <div class="brand">
+          <div class="brand-logo">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div class="brand-title">
+            <h1>PANTAU BEGAL DKI JAKARTA</h1>
+            <p>Sistem Pemantau & Kompilasi Data Media Sosial</p>
+          </div>
+        </div>
+        
+        <div class="scan-status-container">
+          <div class="scanner-radar">
+            <div class="pulse-dot"></div>
+            <div class="radar-text" id="radar-status">PEMINDAIAN SOSMED AKTIF</div>
+          </div>
+          <button class="btn-report" id="btn-open-report">
+            <i class="fa-solid fa-circle-exclamation"></i> Laporkan Insiden
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main>
+      <!-- Column 1: Statistics & Trackers -->
+      <section class="col-stats">
+        <!-- Summary Stats Card -->
+        <div class="panel">
+          <div class="panel-title">
+            <h2><i class="fa-solid fa-chart-simple"></i> Ringkasan Data</h2>
+            <span class="panel-subtitle">24 Jam Terakhir</span>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-box">
+              <div class="stat-value red-glow" id="stat-total-incidents">8</div>
+              <div class="stat-label">Total Insiden</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value cyan-glow" id="stat-active-sources">5</div>
+              <div class="stat-label">Sosmed Dilacak</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="stat-total-yearly-count" style="color: var(--color-purple); font-weight: 800; font-family: monospace;">348</div>
+              <div class="stat-label">Kasus 365 Hari</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="stat-main-hazard" style="color: var(--color-medium); font-size: 1.1rem; line-height: 1.6; font-weight: 800;">SIAGA (SEDANG)</div>
+              <div class="stat-label">Status Keamanan</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Media Sources Tracked -->
+        <div class="panel">
+          <div class="panel-title">
+            <h2><i class="fa-solid fa-satellite-dish"></i> Sumber Dilacak</h2>
+            <span class="panel-subtitle" id="total-tracked-posts">3,412 posts</span>
+          </div>
+          <div class="platform-list">
+            <!-- Twitter/X -->
+            <div class="platform-card">
+              <div class="platform-info">
+                <div class="platform-icon twitter">
+                  <i class="fa-brands fa-x-twitter"></i>
+                </div>
+                <div>
+                  <div class="platform-name">X (Twitter)</div>
+                  <div class="platform-query">#BegalJakarta, begal motor</div>
+                </div>
+              </div>
+              <div class="platform-counter">
+                <div class="platform-count" id="count-twitter">1,482</div>
+                <div class="platform-status">Online</div>
+              </div>
+            </div>
+
+            <!-- Instagram -->
+            <div class="platform-card">
+              <div class="platform-info">
+                <div class="platform-icon instagram">
+                  <i class="fa-brands fa-instagram"></i>
+                </div>
+                <div>
+                  <div class="platform-name">Instagram</div>
+                  <div class="platform-query">@jktinfo, video begal</div>
+                </div>
+              </div>
+              <div class="platform-counter">
+                <div class="platform-count" id="count-instagram">934</div>
+                <div class="platform-status">Online</div>
+              </div>
+            </div>
+
+            <!-- TikTok -->
+            <div class="platform-card">
+              <div class="platform-info">
+                <div class="platform-icon tiktok">
+                  <i class="fa-brands fa-tiktok"></i>
+                </div>
+                <div>
+                  <div class="platform-name">TikTok</div>
+                  <div class="platform-query">begal jakarta, malam hari</div>
+                </div>
+              </div>
+              <div class="platform-counter">
+                <div class="platform-count" id="count-tiktok">561</div>
+                <div class="platform-status">Online</div>
+              </div>
+            </div>
+
+            <!-- Facebook -->
+            <div class="platform-card">
+              <div class="platform-info">
+                <div class="platform-icon facebook">
+                  <i class="fa-brands fa-facebook-f"></i>
+                </div>
+                <div>
+                  <div class="platform-name">Facebook Groups</div>
+                  <div class="platform-query">Info Ronda Jakarta</div>
+                </div>
+              </div>
+              <div class="platform-counter">
+                <div class="platform-count" id="count-facebook">285</div>
+                <div class="platform-status">Online</div>
+              </div>
+            </div>
+
+            <!-- News Portals -->
+            <div class="platform-card">
+              <div class="platform-info">
+                <div class="platform-icon news">
+                  <i class="fa-regular fa-newspaper"></i>
+                </div>
+                <div>
+                  <div class="platform-name">Detik/Komsos News</div>
+                  <div class="platform-query">RSS Kriminalitas Jakarta</div>
+                </div>
+              </div>
+              <div class="platform-counter">
+                <div class="platform-count" id="count-news">150</div>
+                <div class="platform-status">Online</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Column 2: Interactive Map & Charts -->
+      <section class="col-main">
+        <!-- Interactive Map Panel -->
+        <div class="panel map-panel">
+          <div class="panel-title">
+            <h2><i class="fa-solid fa-map-location-dot"></i> Peta Kerawanan Begal DKI Jakarta</h2>
+            <span class="panel-subtitle" id="map-marker-count">Memuat marker...</span>
+          </div>
+          <div id="map"></div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-panel">
+          <!-- Incidents by Region / Kelurahan -->
+          <div class="panel">
+            <div class="panel-title">
+              <h2><i class="fa-solid fa-chart-bar"></i> 5 Kelurahan Terawan</h2>
+            </div>
+            <div class="chart-container">
+              <canvas id="chart-region"></canvas>
+            </div>
+          </div>
+          <!-- Incidents by Source -->
+          <div class="panel">
+            <div class="panel-title">
+              <h2><i class="fa-solid fa-chart-pie"></i> Kontribusi Platform Data</h2>
+            </div>
+            <div class="chart-container">
+              <canvas id="chart-source"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- 365-Day Trend Panel -->
+        <div class="panel" style="margin-top: 0.5rem;">
+          <div class="panel-title">
+            <h2><i class="fa-solid fa-chart-line"></i> Tren Kasus Begal (365 Hari Terakhir)</h2>
+            <span class="panel-subtitle" id="stat-yearly-total">Total: 348 Kasus</span>
+          </div>
+          <div class="chart-container" style="height: 190px;">
+            <canvas id="chart-trend"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Column 3: Live Feed & Actions -->
+      <section class="col-feed">
+        <!-- Live Feed Panel -->
+        <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
+          <div class="panel-title">
+            <h2><i class="fa-solid fa-rss"></i> Live Feed Laporan</h2>
+            <div class="pulse-dot" style="background-color: var(--color-high);"></div>
+          </div>
+          
+          <!-- Filters -->
+          <div class="feed-filters">
+            <div class="search-wrapper">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="filter-search" class="input-search" placeholder="Cari lokasi, kata kunci...">
+            </div>
+            <div class="select-filters three-cols">
+              <select id="filter-region" class="select-filter">
+                <option value="">Semua Wilayah</option>
+                <option value="Jakarta Pusat">Jakarta Pusat</option>
+                <option value="Jakarta Utara">Jakarta Utara</option>
+                <option value="Jakarta Barat">Jakarta Barat</option>
+                <option value="Jakarta Selatan">Jakarta Selatan</option>
+                <option value="Jakarta Timur">Jakarta Timur</option>
+              </select>
+              <select id="filter-kelurahan" class="select-filter" disabled>
+                <option value="">Pilih Kelurahan</option>
+              </select>
+              <select id="filter-platform" class="select-filter">
+                <option value="">Semua Sumber</option>
+                <option value="twitter">X (Twitter)</option>
+                <option value="instagram">Instagram</option>
+                <option value="tiktok">TikTok</option>
+                <option value="facebook">Facebook</option>
+                <option value="news">Portal Berita</option>
+                <option value="citizen">Laporan Warga</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Incidents List -->
+          <div class="incident-feed" id="feed-container">
+            <!-- Dynamic Content Loaded from App.js -->
+            <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+              <i class="fa-solid fa-spinner fa-spin" style="margin-bottom: 0.5rem; font-size: 1.25rem;"></i>
+              <p>Menghubungkan data media sosial...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Emergency Quick Actions -->
+        <div class="panel panel-quick-actions">
+          <div class="panel-title" style="border: none; padding: 0; margin: 0;">
+            <h2 style="font-size: 0.85rem;"><i class="fa-solid fa-phone-volume"></i> PANGGILAN DARURAT & INFO</h2>
+          </div>
+          <div class="actions-list">
+            <button class="action-btn emergency" onclick="window.open('tel:112')">
+              <span>Jakarta Siaga (Bebas Pulsa)</span>
+              <span><i class="fa-solid fa-phone"></i> 112</span>
+            </button>
+            <button class="action-btn" onclick="window.open('tel:110')">
+              <span>Polisi Polda Metro Jaya</span>
+              <span><i class="fa-solid fa-phone"></i> 110</span>
+            </button>
+            <button class="action-btn" id="btn-open-safety-tips">
+              <span>Tips Keselamatan Berkendara</span>
+              <span><i class="fa-solid fa-shield-cat"></i> Baca</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2026 Pantau Begal DKI Jakarta. Data dikompilasi menggunakan simulasi API Scraper media sosial secara berkala.</p>
+    </footer>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- MODAL 1: LAPORKAN BEGAL (SUBMIT REPORT) -->
+  <div class="modal-overlay" id="modal-report">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-circle-exclamation" style="color: var(--color-high);"></i> Laporkan Insiden Begal</h3>
+        <button class="modal-close" id="btn-close-report-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="form-submit-incident">
+          <div class="form-group">
+            <label for="report-title">Judul Kejadian / Deskripsi Singkat</label>
+            <input type="text" id="report-title" class="form-input" placeholder="Contoh: Begal Celurit Rampas Motor Beat" required>
+          </div>
+          
+          <div class="form-group row">
+            <div>
+              <label for="report-region">Wilayah Kota</label>
+              <select id="report-region" class="form-select" required>
+                <option value="">Pilih Wilayah</option>
+                <option value="Jakarta Pusat">Jakarta Pusat</option>
+                <option value="Jakarta Utara">Jakarta Utara</option>
+                <option value="Jakarta Barat">Jakarta Barat</option>
+                <option value="Jakarta Selatan">Jakarta Selatan</option>
+                <option value="Jakarta Timur">Jakarta Timur</option>
+              </select>
+            </div>
+            <div>
+              <label for="report-level">Tingkat Kerawanan / Bahaya</label>
+              <select id="report-level" class="form-select" required>
+                <option value="high">Bahaya Tinggi (Begal Senjata Tajam/Api)</option>
+                <option value="medium">Bahaya Sedang (Perampasan/Penjambretan)</option>
+                <option value="low">Bahaya Rendah (Percobaan Begal/Mencurigakan)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div>
+              <label for="report-kecamatan">Kecamatan</label>
+              <input type="text" id="report-kecamatan" class="form-input" placeholder="Contoh: Cengkareng" required>
+            </div>
+            <div>
+              <label for="report-kelurahan">Kelurahan</label>
+              <input type="text" id="report-kelurahan" class="form-input" placeholder="Contoh: Duri Kosambi" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="report-location">Nama Jalan / Lokasi Spesifik</label>
+            <input type="text" id="report-location" class="form-input" placeholder="Contoh: Jl. Daan Mogot KM 12 (dekat halte busway)" required>
+          </div>
+
+          <div class="form-group row">
+            <div>
+              <label for="report-lat">Latitude</label>
+              <input type="number" step="any" id="report-lat" class="form-input" placeholder="-6.175392" required>
+            </div>
+            <div>
+              <label for="report-lng">Longitude</label>
+              <input type="number" step="any" id="report-lng" class="form-input" placeholder="106.827153" required>
+            </div>
+          </div>
+          <div class="map-picker-hint">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>Anda juga dapat mengklik langsung area di peta utama untuk memilih koordinat secara otomatis.</span>
+          </div>
+
+          <div class="form-group" style="margin-top: 1rem;">
+            <label for="report-details">Detail Kejadian & Ciri-Ciri Pelaku</label>
+            <textarea id="report-details" class="form-textarea" rows="3" placeholder="Deskripsikan waktu kejadian, kronologi singkat, jumlah pelaku, jenis motor/senjata pelaku jika terlihat..." required></textarea>
+          </div>
+
+          <button type="submit" class="form-submit-btn">Kirim Laporan Warga</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: SAFETY TIPS -->
+  <div class="modal-overlay" id="modal-safety-tips">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-shield-halved" style="color: var(--color-cyan);"></i> Tips Keselamatan Berkendara Malam Hari</h3>
+        <button class="modal-close" id="btn-close-safety-modal">&times;</button>
+      </div>
+      <div class="modal-body" style="color: var(--text-secondary); font-size: 0.9rem;">
+        <ul style="padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;">
+          <li><strong style="color: white;">Hindari Rute Gelap dan Sepi:</strong> Pilihlah jalan protokol utama yang memiliki penerangan baik dan ramai kendaraan, meskipun jarak tempuh menjadi sedikit lebih jauh.</li>
+          <li><strong style="color: white;">Berkendara secara Berkelompok:</strong> Di atas jam 11 malam, usahakan tidak berkendara sendirian. Tempel atau ikuti rombongan pengendara motor lain di depan Anda.</li>
+          <li><strong style="color: white;">Waspadai Spion:</strong> Selalu cek kaca spion Anda secara berkala. Jika ada pengendara mencurigakan yang membuntuti, segera meluncur ke tempat ramai, pom bensin, atau kantor polisi terdekat.</li>
+          <li><strong style="color: white;">Persiapkan Rencana Darurat:</strong> Catat atau simpan nomor darurat Polda Metro Jaya (110) dan Pemprov DKI (112) di tombol panggil cepat ponsel Anda.</li>
+          <li><strong style="color: white;">Jangan Berhenti di Tempat Gelap:</strong> Jika ban Anda terasa kurang angin atau mendapat gangguan kecil, usahakan terus berjalan sampai menemukan minimarket atau area terang berpenjaga untuk berhenti.</li>
+          <li><strong style="color: white;">Gunakan Perlengkapan Pelindung:</strong> Gunakan helm full face dan jaket tebal yang melindungi dada untuk mengurangi risiko fatalitas jika terjadi serangan fisik mendadak.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet Map Script -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+          crossorigin=""></script>
+          
+  <!-- Chart.js Script -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Custom Logic Application Script -->
+  <script src="app.js"></script>
+</body>
+</html>
