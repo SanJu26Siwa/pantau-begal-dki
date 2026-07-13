@@ -244,14 +244,50 @@ main {
   width: 100%;
   flex: 1;
   display: grid;
-  grid-template-columns: 320px 1fr 360px;
+  grid-template-columns: 280px 1fr 320px;
   gap: 1.5rem;
 }
 
-@media (max-width: 1200px) {
+/* Tablet & Medium Screen Layout (2 Columns, Feed at bottom) */
+@media (max-width: 1150px) {
+  main {
+    grid-template-columns: 280px 1fr;
+    grid-template-rows: auto;
+  }
+  .col-feed {
+    grid-column: span 2;
+    max-height: none !important;
+  }
+}
+
+/* Mobile Screen Layout (1 Column Stacked) */
+@media (max-width: 768px) {
   main {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto;
+    gap: 1.25rem;
+  }
+  .col-feed {
+    grid-column: span 1;
+  }
+}
+
+/* Compact Mobile Screens */
+@media (max-width: 480px) {
+  header {
+    padding: 0.75rem 1rem;
+  }
+  main {
+    padding: 0 0.75rem;
+    margin: 1rem auto;
+    gap: 1rem;
+  }
+  .panel {
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .select-filters.three-cols {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -435,13 +471,13 @@ main {
 /* Map Container styling */
 .map-panel {
   flex: 1.2;
-  min-height: 450px;
 }
 
 #map {
   width: 100%;
-  height: 100%;
-  min-height: 400px;
+  height: 48vh;
+  min-height: 380px;
+  max-height: 520px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
   background: #f1f5f9;
